@@ -1,0 +1,7 @@
+#! /usr/bin/env bash
+src_fn_str=$1
+exe_fn_str=$(echo $src_fn_str | sed -r 's/([^\.]+)\.rs/\1\.bin/g')
+#echo "@ps rsexec run as '$0 $1 $2 $3'"
+#echo "src exe $src_fn_str $exe_fn_str"
+
+rustc $src_fn_str -o $exe_fn_str && (./$exe_fn_str && rm $exe_fn_str) || echo "Errors while compile. Please check and fix errors above"

@@ -1,0 +1,23 @@
+#! /usr/bin/env bash
+src_fn_str=$1
+ext_str='.go'
+tmp_dn_str=$(mktemp -d)
+
+
+
+
+src_abs_fn_str=$(realpath $src_fn_str)
+modname_str=$(basename $src_abs_fn_str $ext_str)
+src_fn_intmp_str=$tmp_dn_str/$src_fn_str
+
+
+
+
+
+
+cat $src_fn_str | sed -re 's/^#!.*$//g' > $src_fn_intmp_str
+pushd $tmp_dn_str
+go mod init $modname_str
+go run $src_fn_intmp_str && echo "Program '$modname_str' executed successfully with exit code 0" || echo "Errors while running. Please check and fix errors above"
+echo "Going to cleanup tmp dir created for module init and running: $tmp_dn_str"
+rm -rf $tmp_dn_str && echo "Cleanup complete." || echo "Error during cleanup."
