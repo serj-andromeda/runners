@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 src_fn_str=$1
-bin_fn_str=$(echo $src_fn_str | sed -r 's/([^\.]+)\.rs/\1\.bin/g')
-bin_dir=$(mktemp -d -t bin-XXXXXXXXXX)
+proj_name_str=$(echo $src_fn_str | sed -r 's/([^\.]+)\.rs/\1/g')
+tmp_dn_str=$(mktemp -d -t runnerXXXXXXXXXX)
 #echo "@ps rustrun run as '$0 $1 $2 $3'"
 #echo "src exe $src_fn_str $bin_fn_str"
 
