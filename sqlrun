@@ -1,7 +1,0 @@
-#! /usr/bin/env bash
-src_fn_str=$1
-db_fn_str="/storage/emulated/0/_dev_data/db/city-1.db"
-echo "@ps sqlrun run as '$0 $1 $2 $3'"
-echo "src db $src_fn_str $db_fn_str"
-
-rustc $src_fn_str -o $exe_fn_str && (./$exe_fn_str && rm $exe_fn_str) || echo "Errors while running $1. Please check and fix errors above"

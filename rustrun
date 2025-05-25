@@ -1,11 +1,18 @@
 #! /usr/bin/env bash
-src_fn_str=$1
-proj_name_str=$(echo $src_fn_str | sed -r 's/([^\.]+)\.rs/\1/g')
-tmp_dn_str=$(mktemp -d -t runnerXXXXXXXXXX)
-#echo "@ps rustrun run as '$0 $1 $2 $3'"
-#echo "src exe $src_fn_str $bin_fn_str"
+set -x
+src_absfn_str=$(realpath print.rs)
+src_basename_str=$(basename $src_absfn_str)
+projname_str=$(echo $src_basename_str | sed 's/\.rs//g')
+tmpabsdn_str=$(mktemp -d -t rustrun_XXXXXXXXXXX)
+#echo $tmpabsdn_str
+#/data/data/com.termux/files/usr/tmp/runnerCy794qsVcqb
+# last test: rustrun_2Tv6am3YMI7
+projtmpabsdn_str=$tmpabsdn_str
+pushd $tmpabsdn_str
+cargo new $projname_str
+projtmpabsdn_str=$tmpabsdn_str/$projname_str
+echo -e "\n[profile.dev]\nincremental = false" >> $projtmpabsdn_str/Cargo.toml
+cat $src_absfn_str | sed 's/^#!.*$//g' > $projtmpabsdn_str/src/main.rs
 
-target_fn_with_dir_str=$bin_dir/bin_fn_str
-rustc $src_fn_str -o $target_fn_with_dir_str && (./$($fn_with_dir_str  && rm $fn_with_dir_str) || echo "Errors while compile or exec. Please check and fix errors above"
-echo "Cleaning up $bin_dir"
-rm -rf $bin_dir
+cd $projtmpabsdn_str
+cargo run
