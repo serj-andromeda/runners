@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 set -x
-src_absfn_str=$(realpath print.rs)
+src_absfn_str=$(realpath $1)
 src_basename_str=$(basename $src_absfn_str)
 projname_str=$(echo $src_basename_str | sed 's/\.rs//g')
 tmpabsdn_str=$(mktemp -d -t rustrun_XXXXXXXXXXX)
