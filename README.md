@@ -1,2 +1,2 @@
 # runners
-Runners via shebang for compiling languages (and some other stuff like SQLs)
+Runners using shebang syntax for compiling languages (and some other stuff like SQLs)
