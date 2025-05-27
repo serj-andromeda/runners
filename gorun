@@ -20,4 +20,4 @@ pushd $tmp_dn_str
 go mod init $modname_str
 go run $src_fn_intmp_str && echo "Program '$modname_str' executed successfully with exit code 0" || echo "Errors while running. Please check and fix errors above"
 echo "Going to cleanup tmp dir created for module init and running: $tmp_dn_str"
-rm -rf $tmp_dn_str && echo "Cleanup complete." || echo "Error during cleanup."
+#rm -rf $tmp_dn_str && echo "Cleanup complete." || echo "Error during cleanup."

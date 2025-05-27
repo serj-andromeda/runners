@@ -1,29 +1,20 @@
 #! /usr/bin/env bash
-set -x
 src_absfn_str=$(realpath "$1")
 src_basename_str=$(basename "$src_absfn_str")
 projname_str=$(echo "$src_basename_str" | sed 's/\.rs//g')
 tmpabsdn_str=$(mktemp -d -t rustrun_XXXXXXXXXXX)
-echo "Tmp absdn: $tmpabsdn_str"
-#/data/data/com.termux/files/usr/tmp/runnerCy794qsVcqb
-# last test: rustrun_2Tv6am3YMI7
 projtmpabsdn_str=$tmpabsdn_str
 pushd $tmpabsdn_str
 cargo new $projname_str
 cn_ec_int=$?
-echo "Result code of cargo new in $(pwd) for $(projname_str) is $cn_ec_int"
-read _dummy
 if [ $cn_ec_int -ne 0 ]; then
-	echo "Failed to create project $projname_str in $tmpabsdn_str"
-	exit 1
+	echo -e "\x1b[91mFailed to create project $projname_str in $tmpabsdn_str Please fix error(s) above and then re-run.\x1b[0m"
+	exit $cn_ec_int
 fi
-echo '@ps just after cargo new. press enter to cont'; read _dummy;
 projtmpabsdn_str=$tmpabsdn_str/$projname_str
 echo -e "\n[profile.dev]\nincremental = false" >> "$projtmpabsdn_str/Cargo.toml"
-echo '@ps just after toml file addon. press enter to cont'; read -r _dummy;
 cat "$src_absfn_str" | sed 's/^#!.*$//g' > "$projtmpabsdn_str/src/main.rs"
-echo '@ps just after copy file. press enter to cont'; read -r _dummy;
 
 
 cd "$projtmpabsdn_str" || exit 1
-cargo run
+cargo run && echo -e "\x1b[92mProgram finished succesfully with exit code $?\x1b[0m" || echo -e "\x1b[91mProgram finished with errors. Exit code is $?\x1b[0m"
