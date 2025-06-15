@@ -18,4 +18,9 @@ added these stub just for uniformity
 ### [rustrun](rustrun)
 - some fixes and debug code removal
 
+## 29/05/25
+### [sqliterun](sqliterun)
+- rename `sqlrun` to `sqliterun`
+
+
 
